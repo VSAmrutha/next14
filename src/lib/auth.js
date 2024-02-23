@@ -4,30 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { connectToDb } from "./utils";
 import { User } from "./models";
 import bcrypt from 'bcryptjs'
-//const login=async(credentials)=>{
-//    try{
-//          connectToDb();
-//  const user=await User.findOne({username:credentials.username});
-//  if(!user){
-//    console.log("user not exits ")
-//    return {error:"User not exists"}
-//  }
-//  const isPasswordCorrect=await bcrypt.compare(credentials.password,user.password);
-// console.log("isPasswordCorrect &&&",isPasswordCorrect)
-// console.log(credentials.password,user.password,"***********pass")
- 
-//  if(!isPasswordCorrect){
-//    console.log("wrong cred")
-//    return {error:"Wrong Credentials"}
-//  }
-//    console.log("logged in")
-//    return {error:user}
-  
-//    }catch(err){
-//        console.log(err)
-//        throw new Error("Failed to login")
-//    }
-//}
+
 const login = async (credentials) => {
     try {
       connectToDb();
@@ -51,18 +28,7 @@ const login = async (credentials) => {
 export const {handlers:{GET,POST},auth,signIn,signOut}=NextAuth(
     {
         providers: [
-            GitHub({clientId:process.env.GITHUB_ID,clientSecret:process.env.GITHUB_SECRET}),
-            //CredentialsProvider({
-            //    async authorize(credentials){
-            //        try{
-            //           const user=await login(credentials)
-            //           return user
-            //        }catch(err){
-            //            console.log(err)
-            //        }
-            //    }
-            //})
-           
+            GitHub({clientId:process.env.GITHUB_ID,clientSecret:process.env.GITHUB_SECRET}),           
               CredentialsProvider({
                 async authorize(credentials) {
                   try {
@@ -77,7 +43,6 @@ export const {handlers:{GET,POST},auth,signIn,signOut}=NextAuth(
     ,
     callbacks:{
         async signIn({user,account,profile}){
-            console.log("******",profile.login,profile.email,profile,profile.avatar_url)
             if(account.provider==='github'){
                 connectToDb()
                 try{
