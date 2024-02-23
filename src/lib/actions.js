@@ -2,6 +2,7 @@
 import { connectToDb } from "./utils";
 import {Post} from "./models"
 import { revalidatePath } from "next/cache";
+//import { signOut } from "./auth";
 export const addPost=async(formData)=>{
     const {title,desc,slug,userId}=Object.fromEntries(formData)
     try{
@@ -30,3 +31,6 @@ export const deletePost=async(formData)=>{
         console.log(err,"actions")
     }
 }
+//export const handleLogout=async()=>{
+//    await signOut()
+//  }
